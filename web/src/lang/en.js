@@ -159,6 +159,9 @@ export default {
     afterPullScriptLabel: 'After pull script',
     afterPullScriptTips: `The script that runs on the host server after pull<br>
     For example: bash after-pull-script.sh <br>`,
+    beforeDeployScriptLabel: 'Before deploy script',
+    beforeDeployScriptTips: `The script that runs on the target server before deploy<br>
+    For example: bash before-deploy-script.sh<br>`,
     afterDeployScriptLabel: 'After deploy script',
     afterDeployScriptTips: `The script that runs on the target server after deploy<br>
     For example: bash after-deploy-script.sh<br>

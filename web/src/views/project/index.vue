@@ -227,6 +227,28 @@
               <codemirror ref="afterPullScript" v-model="formData.afterPullScript" :options="cmOption" placeholder="Already switched to project directory..." />
             </el-form-item>
           </el-tab-pane>
+          <el-tab-pane name="beforeDeployScript">
+            <span slot="label">
+              {{ $t('projectPage.beforeDeployScriptLabel') }}
+              <el-tooltip class="item" effect="dark" placement="bottom">
+                <div slot="content" v-html="$t('projectPage.beforeDeployScriptTips')" />
+                <i class="el-icon-question" style="padding-left: 3px" />
+              </el-tooltip>
+            </span>
+            <el-form-item prop="beforeDeployScript" label-width="0px">
+              <el-select v-model="formData.beforeDeployScriptMode" :placeholder="$t('projectPage.scriptMode')+'(Default: bash)'" style="width:100%" @change="handleScriptModeChange">
+                <el-option
+                  v-for="(item, index) in scriptModeOption"
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item prop="beforeDeployScript" label-width="0px">
+              <codemirror ref="beforeDeployScript" v-model="formData.beforeDeployScript" :options="cmOption" />
+            </el-form-item>
+          </el-tab-pane>
           <el-tab-pane name="afterDeployScript">
             <span slot="label">
               {{ $t('projectPage.afterDeployScriptLabel') }}
@@ -499,6 +521,8 @@ export default {
         symlinkPath: '',
         afterPullScriptMode: '',
         afterPullScript: '',
+        beforeDeployScriptMode: '',
+        beforeDeployScript: '',
         afterDeployScriptMode: '',
         afterDeployScript: '',
         environment: 1,

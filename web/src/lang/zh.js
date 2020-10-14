@@ -169,6 +169,11 @@ export default {
     afterPullScriptTips: `拉取代码后在宿主服务器运行的脚本<br>
     运行方式：打包成一份脚本文件<br>
     检查服务器是否安装该脚本类型(默认以bash运行)<br>`,
+    beforeDeployScriptLabel: '部署前运行脚本',
+    beforeDeployScriptTips: `部署前在目标服务器运行的脚本<br>
+    运行方式：打包成一份脚本文件<br>
+    如需重启服务，请注意是否需要nohup<br>
+    检查服务器是否安装该脚本类型(默认以bash运行)`,
     afterDeployScriptLabel: '部署后运行脚本',
     afterDeployScriptTips: `部署后在目标服务器运行的脚本<br>
     运行方式：打包成一份脚本文件<br>

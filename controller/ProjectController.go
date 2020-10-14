@@ -110,23 +110,25 @@ func (Project) GetBindUserList(gp *core.Goploy) *core.Response {
 // Add project
 func (Project) Add(gp *core.Goploy) *core.Response {
 	type ReqData struct {
-		Name                  string  `json:"name" validate:"required"`
-		URL                   string  `json:"url" validate:"required"`
-		Path                  string  `json:"path" validate:"required"`
-		Environment           uint8   `json:"Environment" validate:"required"`
-		Branch                string  `json:"branch" validate:"required"`
-		SymlinkPath           string  `json:"symlinkPath"`
-		Review                uint8   `json:"review"`
-		ReviewURL             string  `json:"reviewURL"`
-		AfterPullScriptMode   string  `json:"afterPullScriptMode"`
-		AfterPullScript       string  `json:"afterPullScript"`
-		AfterDeployScriptMode string  `json:"afterDeployScriptMode"`
-		AfterDeployScript     string  `json:"afterDeployScript"`
-		RsyncOption           string  `json:"rsyncOption"`
-		ServerIDs             []int64 `json:"serverIds"`
-		UserIDs               []int64 `json:"userIds"`
-		NotifyType            uint8   `json:"notifyType"`
-		NotifyTarget          string  `json:"notifyTarget"`
+		Name                   string  `json:"name" validate:"required"`
+		URL                    string  `json:"url" validate:"required"`
+		Path                   string  `json:"path" validate:"required"`
+		Environment            uint8   `json:"Environment" validate:"required"`
+		Branch                 string  `json:"branch" validate:"required"`
+		SymlinkPath            string  `json:"symlinkPath"`
+		Review                 uint8   `json:"review"`
+		ReviewURL              string  `json:"reviewURL"`
+		AfterPullScriptMode    string  `json:"afterPullScriptMode"`
+		AfterPullScript        string  `json:"afterPullScript"`
+		BeforeDeployScriptMode string  `json:"beforeDeployScriptMode"`
+		BeforeDeployScript     string  `json:"beforeDeployScript"`
+		AfterDeployScriptMode  string  `json:"afterDeployScriptMode"`
+		AfterDeployScript      string  `json:"afterDeployScript"`
+		RsyncOption            string  `json:"rsyncOption"`
+		ServerIDs              []int64 `json:"serverIds"`
+		UserIDs                []int64 `json:"userIds"`
+		NotifyType             uint8   `json:"notifyType"`
+		NotifyTarget           string  `json:"notifyTarget"`
 	}
 	var reqData ReqData
 	if err := verify(gp.Body, &reqData); err != nil {
@@ -138,22 +140,24 @@ func (Project) Add(gp *core.Goploy) *core.Response {
 	}
 
 	projectID, err := model.Project{
-		NamespaceID:           gp.Namespace.ID,
-		Name:                  reqData.Name,
-		URL:                   reqData.URL,
-		Path:                  reqData.Path,
-		Environment:           reqData.Environment,
-		Branch:                reqData.Branch,
-		SymlinkPath:           reqData.SymlinkPath,
-		Review:                reqData.Review,
-		ReviewURL:             reqData.ReviewURL,
-		AfterPullScriptMode:   reqData.AfterPullScriptMode,
-		AfterPullScript:       reqData.AfterPullScript,
-		AfterDeployScriptMode: reqData.AfterDeployScriptMode,
-		AfterDeployScript:     reqData.AfterDeployScript,
-		RsyncOption:           reqData.RsyncOption,
-		NotifyType:            reqData.NotifyType,
-		NotifyTarget:          reqData.NotifyTarget,
+		NamespaceID:            gp.Namespace.ID,
+		Name:                   reqData.Name,
+		URL:                    reqData.URL,
+		Path:                   reqData.Path,
+		Environment:            reqData.Environment,
+		Branch:                 reqData.Branch,
+		SymlinkPath:            reqData.SymlinkPath,
+		Review:                 reqData.Review,
+		ReviewURL:              reqData.ReviewURL,
+		AfterPullScriptMode:    reqData.AfterPullScriptMode,
+		AfterPullScript:        reqData.AfterPullScript,
+		BeforeDeployScriptMode: reqData.BeforeDeployScriptMode,
+		BeforeDeployScript:     reqData.BeforeDeployScript,
+		AfterDeployScriptMode:  reqData.AfterDeployScriptMode,
+		AfterDeployScript:      reqData.AfterDeployScript,
+		RsyncOption:            reqData.RsyncOption,
+		NotifyType:             reqData.NotifyType,
+		NotifyTarget:           reqData.NotifyTarget,
 	}.AddRow()
 
 	if err != nil {
@@ -202,22 +206,24 @@ func (Project) Add(gp *core.Goploy) *core.Response {
 // Edit project
 func (Project) Edit(gp *core.Goploy) *core.Response {
 	type ReqData struct {
-		ID                    int64  `json:"id" validate:"gt=0"`
-		Name                  string `json:"name"`
-		URL                   string `json:"url"`
-		Path                  string `json:"path"`
-		SymlinkPath           string `json:"symlinkPath"`
-		Review                uint8  `json:"review"`
-		ReviewURL             string `json:"reviewURL"`
-		Environment           uint8  `json:"Environment"`
-		Branch                string `json:"branch"`
-		AfterPullScriptMode   string `json:"afterPullScriptMode"`
-		AfterPullScript       string `json:"afterPullScript"`
-		AfterDeployScriptMode string `json:"afterDeployScriptMode"`
-		AfterDeployScript     string `json:"afterDeployScript"`
-		RsyncOption           string `json:"rsyncOption"`
-		NotifyType            uint8  `json:"notifyType"`
-		NotifyTarget          string `json:"notifyTarget"`
+		ID                     int64  `json:"id" validate:"gt=0"`
+		Name                   string `json:"name"`
+		URL                    string `json:"url"`
+		Path                   string `json:"path"`
+		SymlinkPath            string `json:"symlinkPath"`
+		Review                 uint8  `json:"review"`
+		ReviewURL              string `json:"reviewURL"`
+		Environment            uint8  `json:"Environment"`
+		Branch                 string `json:"branch"`
+		AfterPullScriptMode    string `json:"afterPullScriptMode"`
+		AfterPullScript        string `json:"afterPullScript"`
+		BeforeDeployScriptMode string `json:"beforeDeployScriptMode"`
+		BeforeDeployScript     string `json:"beforeDeployScript"`
+		AfterDeployScriptMode  string `json:"afterDeployScriptMode"`
+		AfterDeployScript      string `json:"afterDeployScript"`
+		RsyncOption            string `json:"rsyncOption"`
+		NotifyType             uint8  `json:"notifyType"`
+		NotifyTarget           string `json:"notifyTarget"`
 	}
 	var reqData ReqData
 	if err := verify(gp.Body, &reqData); err != nil {
@@ -234,22 +240,24 @@ func (Project) Edit(gp *core.Goploy) *core.Response {
 	}
 
 	err = model.Project{
-		ID:                    reqData.ID,
-		Name:                  reqData.Name,
-		URL:                   reqData.URL,
-		Path:                  reqData.Path,
-		Environment:           reqData.Environment,
-		Branch:                reqData.Branch,
-		SymlinkPath:           reqData.SymlinkPath,
-		Review:                reqData.Review,
-		ReviewURL:             reqData.ReviewURL,
-		AfterPullScriptMode:   reqData.AfterPullScriptMode,
-		AfterPullScript:       reqData.AfterPullScript,
-		AfterDeployScriptMode: reqData.AfterDeployScriptMode,
-		AfterDeployScript:     reqData.AfterDeployScript,
-		RsyncOption:           reqData.RsyncOption,
-		NotifyType:            reqData.NotifyType,
-		NotifyTarget:          reqData.NotifyTarget,
+		ID:                     reqData.ID,
+		Name:                   reqData.Name,
+		URL:                    reqData.URL,
+		Path:                   reqData.Path,
+		Environment:            reqData.Environment,
+		Branch:                 reqData.Branch,
+		SymlinkPath:            reqData.SymlinkPath,
+		Review:                 reqData.Review,
+		ReviewURL:              reqData.ReviewURL,
+		AfterPullScriptMode:    reqData.AfterPullScriptMode,
+		AfterPullScript:        reqData.AfterPullScript,
+		BeforeDeployScriptMode: reqData.BeforeDeployScriptMode,
+		BeforeDeployScript:     reqData.BeforeDeployScript,
+		AfterDeployScriptMode:  reqData.AfterDeployScriptMode,
+		AfterDeployScript:      reqData.AfterDeployScript,
+		RsyncOption:            reqData.RsyncOption,
+		NotifyType:             reqData.NotifyType,
+		NotifyTarget:           reqData.NotifyTarget,
 	}.EditRow()
 
 	if err != nil {
